@@ -5,6 +5,17 @@ import 'exercise.dart';
 import 'package:vibration/vibration.dart';
 
 
+void vibracion() {
+  print('¡Hola!');
+  // Vibrar el teléfono
+  Vibration.hasVibrator().then((hasVibrator) {
+    if (hasVibrator ?? false) {
+      Vibration.vibrate(duration: 100); // vibra 100 ms
+    }
+  });
+}
+
+
 class SensorScreen extends StatefulWidget {
   final Exercise exercise;
   SensorScreen({super.key, required this.exercise});
@@ -14,8 +25,11 @@ class SensorScreen extends StatefulWidget {
 }
 
 class _SensorScreenState extends State<SensorScreen> {
-  double x = 0, y = 0, z = 0, reps = 0;}
+  double x = 0, y = 0, z = 0, reps = 0;
+  bool cooldown = false;
   late StreamSubscription<UserAccelerometerEvent> _subscription;
+  DateTime lastRepTime = DateTime.now().subtract(Duration(seconds: 1));
+
 
   @override
   void initState() { // se llama una vez al inicio
@@ -28,19 +42,22 @@ class _SensorScreenState extends State<SensorScreen> {
         x = event.x;
         y = event.y;
         z = event.z;
+
         
+
+        DateTime now = DateTime.now();
+        // Solo contar si ha pasado 1 segundo desde la última repetición
+        if (now.difference(lastRepTime).inMilliseconds >= 1000) {
+          lastRepTime = now;
+          cooldown = false;
+        }
 
         switch (widget.exercise.name) {
           case 'squat':
-            if( y > 3 && ){
+            if (!cooldown && (y > 2 || z > 2)){
               reps += 1;
-
-              // Vibrar el teléfono
-              Vibration.hasVibrator().then((hasVibrator) {
-                if (hasVibrator ?? false) {
-                  Vibration.vibrate(duration: 100); // vibra 100 ms
-                }
-              });
+              cooldown = true;
+              vibracion();
             }
             break;
           case 'jump':
