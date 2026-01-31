@@ -17,6 +17,8 @@ class Settings {
         return 3.0;
       case 'balance':
         return 1.2;
+      case 'plank':
+        return 1.5;
       default:
         return 2.0;
     }

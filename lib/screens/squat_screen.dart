@@ -35,7 +35,7 @@ class _SquatScreenState extends State<SquatScreen> {
   void initState() {
     super.initState();
 
-      Settings.getSensitivity('squat').then((v) {
+      Settings.getSensitivity('squat').then((v) { // sensitivity y cooldown_ms de storage
         setState(() => sensitivity = v);
       });
 

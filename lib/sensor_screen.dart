@@ -7,6 +7,7 @@ import 'package:fl_chart/fl_chart.dart';
 
 import 'screens/squat_screen.dart';
 import 'screens/test_screen.dart';
+import 'screens/plank_screen.dart';
 
 class SensorScreen extends StatelessWidget {
   final Exercise exercise;
@@ -20,6 +21,8 @@ class SensorScreen extends StatelessWidget {
         return TestScreen();
       case 'squat':
         return SquatScreen();
+      case 'plank':
+        return PlankScreen();
       case 'jump':
         //return JumpScreen();
       case 'balance':
