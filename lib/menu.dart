@@ -14,6 +14,7 @@ class MenuScreen extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
+            _menuButton(context, 'test', Exercise.test),
             _menuButton(context, 'Sentadillas', Exercise.squat),
             _menuButton(context, 'Saltos', Exercise.jump),
             _menuButton(context, 'Equilibrio', Exercise.balance),

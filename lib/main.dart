@@ -2,11 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:sensors_plus/sensors_plus.dart'; // ACELERÓMETRO
 import "menu.dart";
 
-enum Exercise {
-  squat,
-  jump,
-  balance,
-}
 
 void main() {
   runApp(const MyApp());
