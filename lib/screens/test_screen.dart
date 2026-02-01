@@ -3,14 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:sensors_plus/sensors_plus.dart';
 import 'package:vibration/vibration.dart';
 import 'package:fl_chart/fl_chart.dart';
+import '../audio/sounds.dart';
+import '../audio/vibration.dart';
 
-void vibracion() {
-  Vibration.hasVibrator().then((hasVibrator) {
-    if (hasVibrator ?? false) {
-      Vibration.vibrate(duration: 100);
-    }
-  });
-}
+
+
 
 class TestScreen extends StatefulWidget {
   const TestScreen({super.key});
