@@ -4,7 +4,8 @@ import 'package:sensors_plus/sensors_plus.dart';
 import 'package:vibration/vibration.dart';
 import 'package:fl_chart/fl_chart.dart';
 import '../storage/settings.dart';
-import 'package:audioplayers/audioplayers.dart';
+//import 'package:audioplayers/audioplayers.dart';
+import '../audio/sounds.dart';
 
 
 
@@ -33,26 +34,7 @@ void vibracion_coundown_5() async {
 }
 
 
-Future<void> sonido_countdown(AudioPlayer player) async {
-  for (int i = 0; i < 3; i++) {
-    await player.play(
-      AssetSource('sounds/bip.mp3'),
-      volume: 0.8,
-    );
-    await Future.delayed(const Duration(seconds: 1));
-  }
 
-  // bip final más fuerte
-  await player.play(
-    AssetSource('sounds/bip.mp3'),
-    volume: 1.0,
-  );
-  await Future.delayed(const Duration(milliseconds: 200));
-  await player.play(
-    AssetSource('sounds/bip.mp3'),
-    volume: 1.0,
-  );
-}
 
 
 
@@ -65,7 +47,7 @@ class PlankScreen extends StatefulWidget {
 }
 
 class _PlankScreenState extends State<PlankScreen> {
-  final AudioPlayer _player = AudioPlayer();
+  //final AudioPlayer _player = AudioPlayer();
   double x = 0, y = 0, z = 0;
   int time = 0;
   DateTime initialTime = DateTime.now();  
@@ -82,7 +64,7 @@ class _PlankScreenState extends State<PlankScreen> {
   @override
   void initState() {
     super.initState();
-    sonido_countdown(_player);
+    AppSounds.sonido_countdown();
 
     _subscription = userAccelerometerEvents.listen((event) {
       if (!mounted) return;
@@ -95,7 +77,7 @@ class _PlankScreenState extends State<PlankScreen> {
 
        if (coundown1){
             // cooldown de 5 segundos
-            if (now.difference(initialTime).inMilliseconds >= 5000) { //const  futuro??
+            if (now.difference(initialTime).inMilliseconds >= 4000) { //const  futuro??
                 coundown1 = false;
                 //vibracion_fuerte();
                 initialTime = DateTime.now(); //redefinimos para no contar los primeros 5 segundos 
@@ -110,6 +92,7 @@ class _PlankScreenState extends State<PlankScreen> {
         z = event.z;
 
 
+
         if( !failed){
             timeS = now.difference(initialTime!).inSeconds;
         }
@@ -117,7 +100,8 @@ class _PlankScreenState extends State<PlankScreen> {
         // LOGICA FALLA PLANK
         if (!failed && (x + y + z > sensitivity  )) { //const aceleración mínima
             failed = true;
-            vibracion_fuerte();
+            AppSounds.fail();
+            //vibracion_fuerte();
         }
       });
     });
